@@ -54,7 +54,8 @@ Every included CloudStream upstream is tagged in `policy/upstreams.json`:
 - Mangayomi: correct `itemType` per file, allowlisted `sourceCodeUrl` (executable) and
   `iconUrl`, non-nsfw flag, unique ids.
 - Sora: required fields (`sourceName`, `baseUrl`, `language`, `version`, `scriptUrl`), type
-  limited to `anime`/`movie`/`mangas` (the only values Dartotsu displays), unique names.
+  limited to `anime`/`movie`/`mangas` (the only values Dartotsu displays), unique names,
+  https DNS-name `baseUrl` (public-IP hosts dropped).
 - CloudStream: unique `internalName`, no `status: 0` (down), no paid entries, required
   `language`/`version`, `.cs3` must be a valid zip containing `classes.dex`.
 
@@ -69,6 +70,10 @@ Every included CloudStream upstream is tagged in `policy/upstreams.json`:
 - Suspicious-URL pattern list (shorteners, paste sites, webhooks, tunnelers, credential-lure
   wording) applied to every referenced URL — including URLs found *inside* compiled code.
 - Private/localhost/IPv4/IPv6 hosts blocked for all fetches.
+- Index `baseUrl`/`url` fields must be DNS names: public-IP endpoints are dropped at build
+  (`public_ip_host` drop reason) as a phishing-red-flag and stability heuristic. Loopback
+  (`127.0.0.1`, e.g. Komga's self-hosted default) and private/LAN ranges are kept because
+  local-server extensions legitimately default to them.
 - Post-redirect final URL is validated too (no redirecting allowlisted URLs to foreign hosts).
 
 **NSFW**

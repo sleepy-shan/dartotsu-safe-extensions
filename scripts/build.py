@@ -324,6 +324,10 @@ def build_aniyomi(ctx: Ctx):
                 if not bu.startswith("https://"):
                     bad_src = f"non-https baseUrl ({bu[:60]})"
                     break
+                pih = C.public_ip_host(bu)
+                if pih:
+                    bad_src = f"public-ip baseUrl ({pih})"
+                    break
                 rs = C.suspicious_reason(bu, ctx.domains)
                 if rs:
                     bad_src = rs
@@ -554,6 +558,10 @@ def build_mangayomi(ctx: Ctx):
                 if not str(raw.get("baseUrl", "")).startswith("http"):
                     drop("bad_base_url")
                     continue
+                pih = C.public_ip_host(str(raw.get("baseUrl", "")))
+                if pih:
+                    drop(f"public_ip_host ({pih})")
+                    continue
                 # upstream occasionally ships the exact same source twice;
                 # name+baseUrl repeats are legitimate (per-language instances)
                 eid = raw.get("id")
@@ -693,6 +701,10 @@ def build_sora(ctx: Ctx):
             bu = str(mod.get("baseUrl", ""))
             if not bu.startswith("https://"):
                 drop("bad_base_url")
+                continue
+            pih = C.public_ip_host(bu)
+            if pih:
+                drop(f"public_ip_host ({pih})")
                 continue
 
             # --- script (executable) ---

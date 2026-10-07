@@ -129,6 +129,9 @@ def verify_aniyomi(ctx: dict, domains: dict, report: dict):
                 err(f"{label}: non-https source baseUrl {bu}")
             if C.suspicious_reason(str(bu), domains):
                 err(f"{label}: suspicious source baseUrl {bu}")
+            pih = C.public_ip_host(str(bu))
+            if pih:
+                err(f"{label}: public-ip source baseUrl {pih}")
         icon = f"{ctx['raw_base']}/icon/{pkg}.png"
         rel = self_rel(icon, ctx["raw_base"])
         if not rel or not (C.ROOT / rel).exists():
@@ -172,6 +175,9 @@ def verify_mangayomi(ctx: dict, domains: dict, report: dict):
                 err(f"{label}: iconUrl policy violation: {icon_url} ({icon_reason})")
             if not str(e.get("baseUrl", "")).startswith("http"):
                 err(f"{label}: bad baseUrl")
+            pih = C.public_ip_host(str(e.get("baseUrl", "")))
+            if pih:
+                err(f"{label}: public-ip baseUrl {pih}")
             if C.adult_blocked(str(e.get("name", "")), domains):
                 err(f"{label}: adult-name pattern")
 
@@ -197,6 +203,9 @@ def verify_sora(ctx: dict, domains: dict, report: dict):
             err(f"{label}: nsfw flag set")
         if not str(e.get("baseUrl", "")).startswith("https://"):
             err(f"{label}: bad baseUrl")
+        pih = C.public_ip_host(str(e.get("baseUrl", "")))
+        if pih:
+            err(f"{label}: public-ip baseUrl {pih}")
         check_self_url(str(e.get("scriptUrl", "")), ctx, label)
         if e.get("iconUrl"):
             check_self_url(str(e["iconUrl"]), ctx, label)
@@ -207,6 +216,9 @@ def verify_sora(ctx: dict, domains: dict, report: dict):
             u = e.get(field)
             if u and C.suspicious_reason(str(u), domains):
                 err(f"{label}: suspicious {field}: {u}")
+            pih = C.public_ip_host(str(u or ""))
+            if pih:
+                err(f"{label}: public-ip {field}: {pih}")
 
 
 def verify_cloudstream(ctx: dict, domains: dict, report: dict):
