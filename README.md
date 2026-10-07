@@ -35,6 +35,15 @@ https://cdn.jsdelivr.net/gh/sleepy-shan/dartotsu-safe-extensions@main
 | **Sora** | `<RAW_BASE>/sora/index.json` | Anime extension repo (type `mangas` modules also show under Manga) |
 | **CloudStream** | `<RAW_BASE>/cloudstream/repo.json` | Anime/extension repo (CloudStream has a single repo list) |
 
+> [!IMPORTANT]
+> **Watching anime?** The Mangayomi indexes are per content type —
+> `mangayomi/index.json` contains **manga sources only**. Add
+> `mangayomi/anime_index.json` as an Anime extension repo as well (or use the
+> one-tap `dar://` deep link below, which registers manga, anime and novel in
+> one go). Entries added under a tab whose content type they don't match are
+> filtered out, so the manga repo alone leaves the anime tab with no playable
+> sources.
+
 One-tap deep links (Dartotsu handles these schemes):
 
 ```
