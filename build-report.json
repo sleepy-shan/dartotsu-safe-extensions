@@ -2834,16 +2834,16 @@
       ]
     }
   },
-  "built_at": "2026-10-07T10:40:56.262497+00:00",
+  "built_at": "2026-10-07T11:22:38.842654+00:00",
   "policy_sha256": {
     "upstreams.json": "a8f344a13557346e239d6ff62fe7445c46f2ba7da3c0235cb84402c99ebee0d2",
     "domains.json": "717b100e09a4b1e707e70f716459a2dfa8af8eefe0b192474b2aa721d10c46bb",
     "blocklist.json": "d1708440be1047cd2620a792ea92582cf5e1665c4077a560d877db2b9ff87bff"
   },
-  "raw_base": "https://raw.githubusercontent.com/sleepy-shan/dartotsu-safe-extensions/main",
+  "raw_base": "https://cdn.jsdelivr.net/gh/sleepy-shan/dartotsu-safe-extensions@main",
   "totals": {
     "mirrored_files": 624,
-    "mirrored_bytes": 43658380
+    "mirrored_bytes": 43655878
   },
   "critical": []
 }
