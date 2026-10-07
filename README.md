@@ -16,8 +16,15 @@ Replace `USER/REPO` with where you forked this repository (defaults below assume
 Raw base URL:
 
 ```
-https://raw.githubusercontent.com/sleepy-shan/dartotsu-safe-extensions/main
+https://cdn.jsdelivr.net/gh/sleepy-shan/dartotsu-safe-extensions@main
 ```
+
+> Served through **jsDelivr** (GitHub's public CDN). This is the recommended
+> base: brand-new repositories are sometimes flagged by URL-scanner reputation
+> engines when served directly from `raw.githubusercontent.com`. The plain raw
+> variant (`https://raw.githubusercontent.com/sleepy-shan/dartotsu-safe-extensions/main`)
+> works exactly the same — regenerate with `--repo-base` if you prefer it (see
+> "Publishing this repo").
 
 | Ecosystem | Index URL | Where to add it |
 |---|---|---|
@@ -34,7 +41,7 @@ One-tap deep links (Dartotsu handles these schemes):
 aniyomi://add-repo?url=<encoded index.min.json URL>          (anime)
 tachiyomi://add-repo?url=<encoded index.min.json URL>        (manga)
 sora://add-repo?url=<encoded sora/index.json URL>
-cloudstreamrepo://raw.githubusercontent.com/sleepy-shan/dartotsu-safe-extensions/main/cloudstream/repo.json
+cloudstreamrepo://cdn.jsdelivr.net/gh/sleepy-shan/dartotsu-safe-extensions@main/cloudstream/repo.json
 dar://add-repo?repo_url=<anime_index>&manga_url=<index>&novel_url=<novel_index>
 ```
 
