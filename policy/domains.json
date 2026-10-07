@@ -1,7 +1,7 @@
 {
   "$comment": "URL trust policy. Every URL referenced by an index entry, and every URL the builder downloads from, must pass these checks. Executable artifacts (APK/CS3/JS) may only come from allowlisted repositories; icons may be fetched from any public https host but are always re-hosted in this repository.",
   "github_repos": [
-    "sagalang02/dartotsu-safe-extensions",
+    "sleepy-shan/dartotsu-safe-extensions",
     "m2k3a/mangayomi-extensions",
     "yuzono/anime-repo",
     "yuzono/anime-extensions",

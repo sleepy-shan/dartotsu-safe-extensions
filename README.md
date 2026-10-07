@@ -11,12 +11,12 @@ mirrored, content-checked and pinned by SHA-256, and a CI job re-verifies everyt
 ## Add to Dartotsu
 
 Replace `USER/REPO` with where you forked this repository (defaults below assume
-`sagalang02/dartotsu-safe-extensions` on branch `main`).
+`sleepy-shan/dartotsu-safe-extensions` on branch `main`).
 
 Raw base URL:
 
 ```
-https://raw.githubusercontent.com/sagalang02/dartotsu-safe-extensions/main
+https://raw.githubusercontent.com/sleepy-shan/dartotsu-safe-extensions/main
 ```
 
 | Ecosystem | Index URL | Where to add it |
@@ -34,7 +34,7 @@ One-tap deep links (Dartotsu handles these schemes):
 aniyomi://add-repo?url=<encoded index.min.json URL>          (anime)
 tachiyomi://add-repo?url=<encoded index.min.json URL>        (manga)
 sora://add-repo?url=<encoded sora/index.json URL>
-cloudstreamrepo://raw.githubusercontent.com/sagalang02/dartotsu-safe-extensions/main/cloudstream/repo.json
+cloudstreamrepo://raw.githubusercontent.com/sleepy-shan/dartotsu-safe-extensions/main/cloudstream/repo.json
 dar://add-repo?repo_url=<anime_index>&manga_url=<index>&novel_url=<novel_index>
 ```
 
@@ -124,7 +124,7 @@ git branch -M main
 git push -u origin main
 ```
 
-If your repo name/branch differs from `sagalang02/dartotsu-safe-extensions@main`, all mirror URLs
+If your repo name/branch differs from `sleepy-shan/dartotsu-safe-extensions@main`, all mirror URLs
 inside the built files embed the raw base. Regenerate before pushing so every URL points at *your* repo:
 
 ```bash
