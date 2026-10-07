@@ -1,0 +1,245 @@
+{
+  "$comment": "Vetted upstream configuration for the curated Dartotsu extension repository. Edit and re-run scripts/build.py to change what gets published.",
+  "aniyomi": {
+    "anime": {
+      "enabled": true,
+      "format": "legacy",
+      "index_url": "https://raw.githubusercontent.com/yuzono/anime-repo/repo/index.min.json",
+      "upstream": "yuzono/anime-repo",
+      "mode": "allowlist",
+      "include": [
+        "123Anime",
+        "Anichi",
+        "AniList",
+        "AniNeko",
+        "AniPlay",
+        "AniWave (Unoriginal)",
+        "Anime1.me",
+        "Anime Fire",
+        "Anime Saturn",
+        "AnimeFLV",
+        "AnimeGG",
+        "AnimeIndo",
+        "AnimeKai (Unoriginal)",
+        "AnimeOnsen",
+        "AnimePahe",
+        "AnimeParadise",
+        "AnimeSogo",
+        "AnimeTake",
+        "AnimeUnity",
+        "AnimeWorld India",
+        "AniZone",
+        "Anikoto",
+        "AV1Encodes",
+        "Debrid Index",
+        "DonghuaStream",
+        "French Anime",
+        "Google Drive",
+        "GoogleDriveIndex",
+        "JetAnime",
+        "Jellyfin",
+        "Kayoanime",
+        "KickAssAnime",
+        "Kuramanime",
+        "LuciferDonghua",
+        "MoviesMod",
+        "MyKdrama",
+        "Oploverz",
+        "Samehadaku",
+        "Stremio",
+        "Subsplease",
+        "Torrentio (Torrent / Debrid)",
+        "Torrentio Anime (Torrent / Debrid)",
+        "Torbox",
+        "UniqueStream",
+        "UHD Movies",
+        "Vostfree",
+        "WCOStream",
+        "WcoAnimeDub",
+        "WcoAnimeSub",
+        "WcoForever",
+        "WcoTv",
+        "Wcofun",
+        "AnimeAv1",
+        "AnimeBum"
+      ]
+    },
+    "manga": {
+      "enabled": true,
+      "format": "mihon_v2",
+      "index_url": "https://raw.githubusercontent.com/keiyoushi/extensions/repo/index.json",
+      "upstream": "keiyoushi/extensions",
+      "mode": "allowlist",
+      "allowed_content_warnings": [
+        "CONTENT_WARNING_SAFE"
+      ],
+      "include": [
+        "Asura Scans",
+        "ComicsKingdom",
+        "Comick (Unoriginal)",
+        "Commit Strip",
+        "Comikey",
+        "Cubari",
+        "Dragon Ball Multiverse",
+        "Dynasty Scans",
+        "Flame Comics",
+        "GlobalComix",
+        "Greed Scans",
+        "Grim Scans",
+        "Hades Scans",
+        "HNI-Scantrad",
+        "INKR",
+        "J-Novel",
+        "K Manga",
+        "Kodansha",
+        "Komga",
+        "LANraragi",
+        "MANGA Plus by SHUEISHA",
+        "MANGA Plus Creators by SHUEISHA",
+        "Manga UP!",
+        "MangaDex",
+        "MangaFire",
+        "MangaFox",
+        "MangaGeko",
+        "MangaKatana",
+        "Mangabat",
+        "Mangahere",
+        "Mangakakalot",
+        "Mangakawaii",
+        "Manganato",
+        "Magazine Pocket",
+        "Magical Translators",
+        "Madara Scans",
+        "Nicovideo Seiga",
+        "Scythe Scans",
+        "Shonen Jump+",
+        "Tapas",
+        "TCB Scans",
+        "VIZ",
+        "WebNovel",
+        "Webtoons.com",
+        "Weeb Central",
+        "WitchScans",
+        "WoopRead",
+        "WuxiaWorld",
+        "xkcd",
+        "izneo (webtoons)"
+      ],
+      "include_mixed": [
+        "Comick (Unoriginal)",
+        "Dynasty Scans",
+        "GlobalComix",
+        "INKR",
+        "Kodansha",
+        "MangaDex",
+        "MangaFire",
+        "MangaFox",
+        "MangaGeko",
+        "Mangabat",
+        "Mangahere",
+        "Mangakakalot",
+        "MangaKatana",
+        "Manganato",
+        "Tapas",
+        "Weeb Central"
+      ]
+    }
+  },
+  "mangayomi": {
+    "enabled": true,
+    "upstream": "m2k3a/mangayomi-extensions",
+    "mode": "all_sfw",
+    "indexes": {
+      "manga": "https://raw.githubusercontent.com/m2k3a/mangayomi-extensions/main/index.json",
+      "anime": "https://raw.githubusercontent.com/m2k3a/mangayomi-extensions/main/anime_index.json",
+      "novel": "https://raw.githubusercontent.com/m2k3a/mangayomi-extensions/main/novel_index.json"
+    },
+    "overrides": [
+      {"id": 601012644, "field": "iconUrl", "value": "https://www.google.com/s2/favicons?sz=128&domain=minitwoscan.com", "reason": "upstream icon 404 (no icon.png in source dir); Google S2 favicon verified 200 2026-10-07"},
+      {"id": 5738565392, "field": "iconUrl", "value": "https://www.google.com/s2/favicons?sz=128&domain=comix.to", "reason": "upstream icon path 404 (site restructured); Google S2 favicon verified 200 2026-10-07"},
+      {"id": 1063819370, "field": "iconUrl", "value": "https://www.google.com/s2/favicons?sz=128&domain=webnoveltranslations.com", "reason": "upstream icon 404 (missing from entityJY repo); Google S2 favicon verified 200 2026-10-07"},
+      {"id": 29312910, "field": "sourceCodeUrl", "value": "https://raw.githubusercontent.com/m2k3a/mangayomi-extensions/main/javascript/manga/src/es/OlympusScanlation.js", "reason": "upstream declared a directory URL; corrected to the real source file (verified in upstream repo tree, 200 2026-10-07)"},
+      {"id": 626511881, "field": "sourceCodeUrl", "value": "https://raw.githubusercontent.com/m2k3a/mangayomi-extensions/main/javascript/novel/src/en/RoyalRoad.js", "reason": "upstream declared a directory URL; corrected to the real source file (verified in upstream repo tree, 200 2026-10-07)"}
+    ],
+    "exclude_ids": [
+      {"id": 607918644, "reason": "Mangás Online: mangasonline.cc no longer resolves in DNS and no icon service knows the domain (verified 2026-10-07)"},
+      {"id": 592572146, "reason": "Manga-Moon: manga-moons.net serves an invalid TLS certificate and no icon service knows the domain (verified 2026-10-07)"}
+    ]
+  },
+  "sora": {
+    "enabled": true,
+    "upstream": "JMcrafter26/sora-sources2",
+    "tree_url": "https://api.github.com/repos/JMcrafter26/sora-sources2/git/trees/main?recursive=1",
+    "raw_base": "https://raw.githubusercontent.com/JMcrafter26/sora-sources2/main",
+    "mode": "all",
+    "include_types": ["anime", "movie", "mangas"],
+    "exclude_path_patterns": ["(broken)", "temp", ".dev."],
+    "extra_allowed_hosts": {
+      "$comment": "Reviewed 2026-10-07 against upstream JS sources; keys are hosts (suffix-matched), values are review notes.",
+      "anilibria.tv": "AniLibria module API (template-literal URL, reviewed benign)",
+      "cache.libria.fun": "AniLibria media CDN (template-literal URL, reviewed benign)",
+      "files.catbox.moe": "public file CDN used by modules for covers/subtitles (reviewed)",
+      "error.org": "placeholder href returned on scrape failure; never fetched (reviewed in source)",
+      "192.168.2.130": "author's LAN debug logger; unreachable code - early return before the fetch (reviewed in source)",
+      "aniwatchtv.to": "Aniwatch target site (module purpose)",
+      "aniworld.to": "AniWorld target site (module purpose)",
+      "hianime.to": "HiAnime target site (module purpose)",
+      "backend.gojo.live": "GojoWTF backend API (module purpose)",
+      "kuramadrive.com": "KuramAnime target site (module purpose)",
+      "i.ibb.co": "image host used for module artwork (reviewed)",
+      "animeapiiiii.vercel.app": "HiAnime API proxy used by modules (reviewed)",
+      "bshar1865-hianime2.vercel.app": "HiAnime API proxy used by modules (reviewed)",
+      "mp4upload.com": "video host resolved by streaming modules (reviewed; covers a4.mp4upload.com)",
+      "voe.sx": "video host resolved by streaming modules (reviewed)",
+      "vidmoly.to": "video host resolved by streaming modules (reviewed)",
+      "speedfiles.net": "video host resolved by streaming modules (reviewed)"
+    }
+  },
+  "cloudstream": {
+    "enabled": true,
+    "repos": [
+      {
+        "name": "recloudstream (official)",
+        "index": "https://raw.githubusercontent.com/recloudstream/extensions/builds/plugins.json",
+        "tier": "verified"
+      },
+      {
+        "name": "phisher98",
+        "index": "https://raw.githubusercontent.com/phisher98/cloudstream-extensions-phisher/refs/heads/builds/plugins.json",
+        "tier": "community"
+      },
+      {
+        "name": "CakesTwix (UK)",
+        "index": "https://raw.githubusercontent.com/CakesTwix/cloudstream-extensions-uk/refs/heads/builds/plugins.json",
+        "tier": "community"
+      },
+      {
+        "name": "Cs-Karma",
+        "index": "https://raw.githubusercontent.com/Kraptor123/Cs-Karma/refs/heads/builds/plugins.json",
+        "tier": "community"
+      },
+      {
+        "name": "CNCVerse",
+        "index": "https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/refs/heads/builds/plugins.json",
+        "tier": "community"
+      },
+      {
+        "name": "CSX",
+        "index": "https://raw.githubusercontent.com/SaurabhKaperwan/CSX/refs/heads/builds/plugins.json",
+        "tier": "community"
+      },
+      {
+        "name": "ItalianProvider",
+        "index": "https://raw.githubusercontent.com/Gian-Fr/ItalianProvider/refs/heads/builds/plugins.json",
+        "tier": "community"
+      },
+      {
+        "name": "MegaRepo",
+        "index": "https://raw.githubusercontent.com/self-similarity/MegaRepo/refs/heads/builds/plugins.json",
+        "tier": "community"
+      }
+    ],
+    "exclude_status": [0],
+    "exclude_paid": true
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "$comment": "Known-bad or unwanted upstreams, packages and names. Entries here are dropped at build time and reported. Add anything you discover here with a reason.",
+  "repos": [],
+  "packages": [],
+  "names": [],
+  "name_patterns": [
+    "\\(dead\\)",
+    "\\(broken\\)",
+    "\\(outdated\\)"
+  ],
+  "$notes": "Historical note: the CloudStream repo 'phisher98/cloudstream-extensions-phisher' was audited during the initial build (all plugin URLs on GitHub raw within its own repo, published sha256 file hashes, dex string scan showed only scraping targets). It is included at 'community' tier. Set it to enabled:false in policy/upstreams.json if you want it removed."
+}

@@ -1,0 +1,5 @@
+# build cache
+.cache/
+*.tmp
+__pycache__/
+*.pyc
