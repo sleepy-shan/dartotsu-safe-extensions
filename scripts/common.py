@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import hashlib
 import io
+import ipaddress
 import json
 import os
 import re
@@ -158,6 +159,31 @@ def _matches(text: str, patterns: list[str]) -> str | None:
 def suspicious_reason(url: str, domains: dict) -> str | None:
     p = _matches(url, domains.get("suspicious_url_patterns", []))
     return f"suspicious pattern: {p}" if p else None
+
+
+def public_ip_host(url: str) -> str | None:
+    """If `url`'s host is a literal *public* IP address, return it, else None.
+
+    Raw public-IP endpoints are a hallmark phishing signature and destabilize
+    extensions, so index `baseUrl`/`url` fields must be DNS names. Loopback and
+    private/ULA addresses are allowed so self-hosted server extensions (e.g.
+    Komga defaulting to 127.0.0.1:25600) still build.
+    """
+    try:
+        h = (urllib.parse.urlsplit(url).hostname or "").strip("[]")
+    except ValueError:
+        return None
+    if not h:
+        return None
+    try:
+        ip = ipaddress.ip_address(h)
+    except ValueError:
+        return None  # not an IP literal -> fine
+    if ip.is_private or ip.is_loopback or ip.is_link_local:
+        return None
+    if ip.is_reserved or ip.is_multicast or ip.is_unspecified:
+        return None
+    return h
 
 
 def blocked_host_reason(host: str, domains: dict) -> str | None:

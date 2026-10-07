@@ -142,13 +142,14 @@
     "upstream": "JMcrafter26/sora-sources2",
     "enabled": true,
     "upstream_entries": 46,
-    "kept": 35,
+    "kept": 34,
     "drops": {
       "script_fetch (url policy: executable url host not allowlisted: api.jm26.net)": 1,
       "type_missing": 5,
       "bad_module_shape": 1,
       "bad_base_url": 1,
       "type_novels": 2,
+      "public_ip_host (111.90.159.132)": 1,
       "js_unapproved_hosts": 1
     },
     "warnings": [
@@ -180,12 +181,11 @@
       "KimCartoon: author icon mirror failed (FetchError: HTTP 404 for https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3122kQwublLkZ6rf1fEpUP79BxZOFmH9BSA&s (cached))",
       "KuramAnime: icon mirror failed (FetchError: HTTP 403 for https://v6.kuramanime.run/assets/img/logo-full-256.png (cached)); icon omitted",
       "KuramAnime: author icon mirror failed (FetchError: HTTP 404 for https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3122kQwublLkZ6rf1fEpUP79BxZOFmH9BSA&s (cached))",
-      "OnlineMoviesHindi: author icon mirror failed (FetchError: HTTP 404 for https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3122kQwublLkZ6rf1fEpUP79BxZOFmH9BSA&s (cached))",
       "Soaper Live: author icon mirror failed (FetchError: HTTP 404 for https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3122kQwublLkZ6rf1fEpUP79BxZOFmH9BSA&s (cached))",
       "StreamingUnity: JS references unapproved hosts: ['cdn.streamingunity.shop', 'streamingunity.shop']",
       "Turkish123: author icon mirror failed (FetchError: HTTP 404 for https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3122kQwublLkZ6rf1fEpUP79BxZOFmH9BSA&s (cached))"
     ],
-    "warning_count": 32,
+    "warning_count": 31,
     "type_normalized": {
       "DDYS": "movies/shows -> movie",
       "Filmpalast": "movies/shows -> movie",
@@ -349,9 +349,6 @@
       "KuramAnime": [
         "kuramadrive.com",
         "v6.kuramanime.run"
-      ],
-      "OnlineMoviesHindi": [
-        "111.90.159.132"
       ],
       "s.to (ENG DUB)": [
         "192.168.2.130",
@@ -2837,7 +2834,7 @@
       ]
     }
   },
-  "built_at": "2026-10-07T10:00:40.511554+00:00",
+  "built_at": "2026-10-07T10:40:56.262497+00:00",
   "policy_sha256": {
     "upstreams.json": "a8f344a13557346e239d6ff62fe7445c46f2ba7da3c0235cb84402c99ebee0d2",
     "domains.json": "717b100e09a4b1e707e70f716459a2dfa8af8eefe0b192474b2aa721d10c46bb",
@@ -2845,8 +2842,8 @@
   },
   "raw_base": "https://raw.githubusercontent.com/sleepy-shan/dartotsu-safe-extensions/main",
   "totals": {
-    "mirrored_files": 626,
-    "mirrored_bytes": 43672909
+    "mirrored_files": 624,
+    "mirrored_bytes": 43658380
   },
   "critical": []
 }
