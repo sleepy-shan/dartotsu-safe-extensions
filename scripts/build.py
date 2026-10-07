@@ -27,7 +27,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import common as C  # noqa: E402
 
-SELF_REPO = "sagalang02/dartotsu-safe-extensions"
+SELF_REPO = "sleepy-shan/dartotsu-safe-extensions"
 
 MANAGED_PATHS = [
     "index.min.json",

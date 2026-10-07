@@ -152,18 +152,18 @@
       "js_unapproved_hosts": 1
     },
     "warnings": [
-      "AniLibria: icon mirror failed (FetchError: HTTP 404 for https://github.com/50n50/sources/blob/main/anilibria/icon.png?raw=true); icon omitted",
-      "AniLibria: author icon mirror failed (FetchError: HTTP 404 for https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3122kQwublLkZ6rf1fEpUP79BxZOFmH9BSA&s)",
-      "Anime3rb: icon mirror failed (FetchError: HTTP 403 for https://anime3rb.com/favicon/apple-touch-icon.png); icon omitted",
+      "AniLibria: icon mirror failed (FetchError: HTTP 404 for https://github.com/50n50/sources/blob/main/anilibria/icon.png?raw=true (cached)); icon omitted",
+      "AniLibria: author icon mirror failed (FetchError: HTTP 404 for https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3122kQwublLkZ6rf1fEpUP79BxZOFmH9BSA&s (cached))",
+      "Anime3rb: icon mirror failed (FetchError: HTTP 403 for https://anime3rb.com/favicon/apple-touch-icon.png (cached)); icon omitted",
       "Anime3rb: author icon mirror failed (FetchError: HTTP 404 for https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3122kQwublLkZ6rf1fEpUP79BxZOFmH9BSA&s (cached))",
       "AnimeBalkan: author icon mirror failed (FetchError: HTTP 404 for https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3122kQwublLkZ6rf1fEpUP79BxZOFmH9BSA&s (cached))",
       "AnimeFenix: author icon mirror failed (FetchError: HTTP 404 for https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3122kQwublLkZ6rf1fEpUP79BxZOFmH9BSA&s (cached))",
       "AnimeHeaven: author icon mirror failed (FetchError: HTTP 404 for https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3122kQwublLkZ6rf1fEpUP79BxZOFmH9BSA&s (cached))",
       "AnimeNoSub: author icon mirror failed (FetchError: HTTP 404 for https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3122kQwublLkZ6rf1fEpUP79BxZOFmH9BSA&s (cached))",
-      "AnimeSaturn: icon mirror failed (FetchError: HTTP 404 for https://www.animesaturn.cx/immagini/apple-touch-icon.png); icon omitted",
+      "AnimeSaturn: icon mirror failed (FetchError: HTTP 404 for https://www.animesaturn.cx/immagini/apple-touch-icon.png (cached)); icon omitted",
       "AnimeSaturn: author icon mirror failed (FetchError: HTTP 404 for https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3122kQwublLkZ6rf1fEpUP79BxZOFmH9BSA&s (cached))",
       "AnimeToast: author icon mirror failed (FetchError: HTTP 404 for https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3122kQwublLkZ6rf1fEpUP79BxZOFmH9BSA&s (cached))",
-      "AnimeUnity: icon mirror failed (FetchError: HTTP 404 for https://github.com/cottonable/Ryu-preservation/blob/2f10226aa087154974a70c1ec78aa83a47daced9/Ryu/Assets.xcassets/Sources/AnimeUnity.imageset/apple-touch-icon.jpg?raw=true); icon omitted",
+      "AnimeUnity: icon mirror failed (FetchError: HTTP 404 for https://github.com/cottonable/Ryu-preservation/blob/2f10226aa087154974a70c1ec78aa83a47daced9/Ryu/Assets.xcassets/Sources/AnimeUnity.imageset/apple-touch-icon.jpg?raw=true (cached)); icon omitted",
       "Aniwatch: author icon mirror failed (FetchError: HTTP 404 for https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3122kQwublLkZ6rf1fEpUP79BxZOFmH9BSA&s (cached))",
       "Aniwatch RAW: author icon mirror failed (FetchError: HTTP 404 for https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3122kQwublLkZ6rf1fEpUP79BxZOFmH9BSA&s (cached))",
       "Aniwatch SUBS: author icon mirror failed (FetchError: HTTP 404 for https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3122kQwublLkZ6rf1fEpUP79BxZOFmH9BSA&s (cached))",
@@ -178,7 +178,7 @@
       "Hianime RAW: author icon mirror failed (FetchError: HTTP 404 for https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3122kQwublLkZ6rf1fEpUP79BxZOFmH9BSA&s (cached))",
       "HianimeSUBS: author icon mirror failed (FetchError: HTTP 404 for https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3122kQwublLkZ6rf1fEpUP79BxZOFmH9BSA&s (cached))",
       "KimCartoon: author icon mirror failed (FetchError: HTTP 404 for https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3122kQwublLkZ6rf1fEpUP79BxZOFmH9BSA&s (cached))",
-      "KuramAnime: icon mirror failed (FetchError: HTTP 403 for https://v6.kuramanime.run/assets/img/logo-full-256.png); icon omitted",
+      "KuramAnime: icon mirror failed (FetchError: HTTP 403 for https://v6.kuramanime.run/assets/img/logo-full-256.png (cached)); icon omitted",
       "KuramAnime: author icon mirror failed (FetchError: HTTP 404 for https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3122kQwublLkZ6rf1fEpUP79BxZOFmH9BSA&s (cached))",
       "OnlineMoviesHindi: author icon mirror failed (FetchError: HTTP 404 for https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3122kQwublLkZ6rf1fEpUP79BxZOFmH9BSA&s (cached))",
       "Soaper Live: author icon mirror failed (FetchError: HTTP 404 for https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3122kQwublLkZ6rf1fEpUP79BxZOFmH9BSA&s (cached))",
@@ -460,9 +460,9 @@
       "SimpsonsUATvProvider: icon fetch failed (network error fetching https://simpsonsua.tv/templates/simpsonsua/images/favicon.ico: <urlopen error timed out>), omitted",
       "BasketballReplays: icon not an image, omitted",
       "Subsplease: icon not an image, omitted",
-      "WatchWrestling: icon fetch failed (HTTP 404 for https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://instapro.ac&size=32), omitted",
-      "AltadefinizioneProvider: icon fetch failed (HTTP 404 for https://www.google.com/s2/favicons?domain=altadefinizione.vodka&sz=128), omitted",
-      "GuardaSerieProvider: icon fetch failed (HTTP 404 for https://www.google.com/s2/favicons?domain=guardaserie.ceo&sz=128), omitted"
+      "WatchWrestling: icon fetch failed (HTTP 404 for https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://instapro.ac&size=32 (cached)), omitted",
+      "AltadefinizioneProvider: icon fetch failed (HTTP 404 for https://www.google.com/s2/favicons?domain=altadefinizione.vodka&sz=128 (cached)), omitted",
+      "GuardaSerieProvider: icon fetch failed (HTTP 404 for https://www.google.com/s2/favicons?domain=guardaserie.ceo&sz=128 (cached)), omitted"
     ],
     "warning_count": 11,
     "dex_hosts": {
@@ -2837,16 +2837,16 @@
       ]
     }
   },
-  "built_at": "2026-10-07T09:05:56.523948+00:00",
+  "built_at": "2026-10-07T10:00:40.511554+00:00",
   "policy_sha256": {
     "upstreams.json": "a8f344a13557346e239d6ff62fe7445c46f2ba7da3c0235cb84402c99ebee0d2",
-    "domains.json": "85b12f3075dc05c5cc8aafe937cdc4bf11b5f1b6211784a8d5b04306b37dfb37",
+    "domains.json": "717b100e09a4b1e707e70f716459a2dfa8af8eefe0b192474b2aa721d10c46bb",
     "blocklist.json": "d1708440be1047cd2620a792ea92582cf5e1665c4077a560d877db2b9ff87bff"
   },
-  "raw_base": "https://raw.githubusercontent.com/sagalang02/dartotsu-safe-extensions/main",
+  "raw_base": "https://raw.githubusercontent.com/sleepy-shan/dartotsu-safe-extensions/main",
   "totals": {
     "mirrored_files": 626,
-    "mirrored_bytes": 43672490
+    "mirrored_bytes": 43672909
   },
   "critical": []
 }

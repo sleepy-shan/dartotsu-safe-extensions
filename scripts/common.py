@@ -25,7 +25,7 @@ CACHE_DIR = ROOT / ".cache"
 
 DEFAULT_USER_AGENT = (
     "dartotsu-safe-extensions/1.0 "
-    "(+https://github.com/sagalang02/dartotsu-safe-extensions)"
+    "(+https://github.com/sleepy-shan/dartotsu-safe-extensions)"
 )
 
 IMAGE_MAGICS = [
