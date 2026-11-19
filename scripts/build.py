@@ -75,6 +75,17 @@ class Ctx:
         self.critical: list[str] = []
         self.checksums: dict[str, str] = {}
 
+    # ---- content policy (18+ toggle) ------------------------------------
+    @property
+    def allow_nsfw(self) -> bool:
+        """policy/upstreams.json: allow NSFW-flagged extensions (18+)."""
+        return bool(self.policy["upstreams"].get("allow_nsfw", False))
+
+    @property
+    def allow_adult_names(self) -> bool:
+        """policy/upstreams.json: allow names matching adult_patterns."""
+        return bool(self.policy["upstreams"].get("allow_adult_names", False))
+
     # ---- fetch wrappers -------------------------------------------------
     def get_json(self, url: str, *, strict=True):
         if strict:
@@ -201,6 +212,9 @@ def build_aniyomi(ctx: Ctx):
         include = set(cfg.get("include", []))
         include_mixed = set(cfg.get("include_mixed", []))
         allowed_cw = set(cfg.get("allowed_content_warnings", ["CONTENT_WARNING_SAFE"]))
+        if ctx.allow_nsfw:
+            # 18+ enabled: every content warning becomes acceptable
+            allowed_cw |= {"CONTENT_WARNING_NSFW", "CONTENT_WARNING_MIXED"}
 
         idx = ctx.get_json(cfg["index_url"])
         if cfg["format"] == "legacy":
@@ -242,15 +256,21 @@ def build_aniyomi(ctx: Ctx):
             if r:
                 drop(f"blocklist ({r})")
                 continue
-            a = ctx.adult_name(disp)
+            a = None if ctx.allow_adult_names else ctx.adult_name(disp)
             if a:
                 drop(f"adult_pattern ({a})")
                 continue
 
             # NSFW / content warning
             if cfg["format"] == "legacy":
-                nsfw = raw.get("nsfw", raw.get("isNsfw", 0)) or 0
-                if nsfw not in (0, False, "0"):
+                nsfw_raw = raw.get("nsfw", raw.get("isNsfw", 0))
+                if nsfw_raw in (0, False, "0", None, ""):
+                    nsfw_out = 0
+                elif nsfw_raw in (2, "2"):
+                    nsfw_out = 2
+                else:
+                    nsfw_out = 1
+                if nsfw_out and not ctx.allow_nsfw:
                     drop("nsfw_flag")
                     continue
                 cw = "CONTENT_WARNING_SAFE"
@@ -259,9 +279,11 @@ def build_aniyomi(ctx: Ctx):
                 if cw not in allowed_cw and disp not in include_mixed:
                     drop(f"content_warning ({cw or 'missing'})")
                     continue
-                if cw not in allowed_cw:
-                    # in include_mixed but not allowlisted entry -> still require allowlist
-                    pass
+                # propagate the warning as the app's nsfw badge (0 safe /
+                # 1 mixed / 2 18+) so users can filter in Dartotsu
+                nsfw_out = {"CONTENT_WARNING_SAFE": 0,
+                            "CONTENT_WARNING_MIXED": 1,
+                            "CONTENT_WARNING_NSFW": 2}.get(cw, 0)
 
             # allowlist mode
             mode = cfg.get("mode", "all_sfw")
@@ -417,7 +439,7 @@ def build_aniyomi(ctx: Ctx):
                     "apk": apk,
                     "lang": lang,
                     "version": version,
-                    "nsfw": 0,
+                    "nsfw": nsfw_out,
                     "sources": sources,
                 }
                 if code is not None:
@@ -430,7 +452,7 @@ def build_aniyomi(ctx: Ctx):
                     "lang": lang,
                     "code": code,
                     "version": version,
-                    "nsfw": 0,
+                    "nsfw": nsfw_out,
                     "sources": sources,
                 }
             kept.append(entry)
@@ -524,11 +546,11 @@ def build_mangayomi(ctx: Ctx):
             if r:
                 drop(f"blocklist ({r})")
                 continue
-            a = ctx.adult_name(name)
+            a = None if ctx.allow_adult_names else ctx.adult_name(name)
             if a:
                 drop(f"adult_pattern ({a})")
                 continue
-            if raw.get("isNsfw"):
+            if raw.get("isNsfw") and not ctx.allow_nsfw:
                 drop("nsfw_flag")
                 continue
             if raw.get("itemType") != MANGAYOMI_ITEMTYPE[type_key]:
@@ -629,6 +651,7 @@ def build_sora(ctx: Ctx):
     warnings: list[str] = []
     kept: list[dict] = []
     js_hosts: dict[str, list[str]] = {}
+    author_icons_omitted = 0
 
     def drop(reason):
         drops[reason] = drops.get(reason, 0) + 1
@@ -679,11 +702,11 @@ def build_sora(ctx: Ctx):
         if r:
             drop(f"blocklist ({r})")
             continue
-        a = ctx.adult_name(sname, str(mod.get("description", "")))
+        a = None if ctx.allow_adult_names else ctx.adult_name(sname, str(mod.get("description", "")))
         if a:
             drop(f"adult_pattern ({a})")
             continue
-        if mod.get("nsfw") is True:
+        if mod.get("nsfw") is True and not ctx.allow_nsfw:
             drop("nsfw_flag")
             continue
         mtype_raw = str(mod.get("type", "")).strip().lower()
@@ -760,6 +783,16 @@ def build_sora(ctx: Ctx):
             new_icon = None
             if icon_url:
                 _, icon_data, err = fetch_asset(icon_url, executable=False)
+                if not (icon_data and C.image_kind(icon_data)):
+                    # upstream icon is dead/404 (common: gstatic thumbnails and
+                    # moved site paths) - fall back to the module site's favicon
+                    # (allowlisted host, re-hosted like every other icon)
+                    fb_host = urllib.parse.urlsplit(bu).hostname or ""
+                    if fb_host:
+                        fb = f"https://www.google.com/s2/favicons?sz=128&domain={fb_host}"
+                        _, fdata, ferr = fetch_asset(fb, executable=False)
+                        if fdata and C.image_kind(fdata):
+                            icon_data, err = fdata, None
                 if icon_data and C.image_kind(icon_data):
                     kind = C.image_kind(icon_data)
                     rel = f"sora/icon/{C.slugify(sname)}.{kind}"
@@ -783,7 +816,9 @@ def build_sora(ctx: Ctx):
                             ctx.store(rel, adata)
                         new_author["icon"] = f"{ctx.raw_base}/{rel}"
                     else:
-                        warnings.append(f"{sname}: author icon mirror failed ({err})")
+                        # upstream ships expired gstatic thumbnail URLs for most
+                        # authors; cosmetic only - omit quietly and count
+                        author_icons_omitted += 1
 
             out = dict(mod)
             out["type"] = mtype  # normalized for Dartotsu display
@@ -810,6 +845,7 @@ def build_sora(ctx: Ctx):
         "drops": drops,
         "warnings": warnings[:80],
         "warning_count": len(warnings),
+        "author_icons_omitted": author_icons_omitted,
         "type_normalized": type_normalized,
         "js_hosts": js_hosts,
     })
@@ -820,6 +856,39 @@ def build_sora(ctx: Ctx):
 # ---------------------------------------------------------------------------
 # CloudStream — aggregates plugin repos, mirrors .cs3 + icons
 # ---------------------------------------------------------------------------
+
+def _favicon_fallback(icon_url: str) -> str | None:
+    """Best Google S2 favicon URL for the site behind a failed icon URL.
+
+    Reads the site domain from favicon-service query params (domain=/url=),
+    otherwise uses the URL's own host. Returns None when no site can be
+    derived (e.g. the URL is already a favicon-service URL for a dead domain).
+    """
+    try:
+        parts = urllib.parse.urlsplit(icon_url)
+    except ValueError:
+        return None
+    site = None
+    q = urllib.parse.parse_qs(parts.query)
+    for k in ("domain", "url"):
+        vals = q.get(k)
+        if vals and vals[0]:
+            site = vals[0]
+            break
+    if not site:
+        host = parts.hostname or ""
+        if not host or any(x in host for x in ("google", "gstatic", "duckduckgo", "wikimedia")):
+            return None
+        site = host
+    if "://" in site:
+        try:
+            site = urllib.parse.urlsplit(site).hostname or ""
+        except ValueError:
+            return None
+    if not site:
+        return None
+    return f"https://www.google.com/s2/favicons?sz=128&domain={site}"
+
 
 def build_cloudstream(ctx: Ctx):
     pol = ctx.policy["upstreams"]["cloudstream"]
@@ -891,7 +960,7 @@ def build_cloudstream(ctx: Ctx):
                 continue
             tv = e.get("tvTypes") or []
             tvs = " ".join(str(x) for x in tv) if isinstance(tv, list) else str(tv)
-            a = ctx.adult_name(name, tvs, str(e.get("description", "")))
+            a = None if ctx.allow_adult_names else ctx.adult_name(name, tvs, str(e.get("description", "")))
             if a:
                 drop(f"adult_pattern ({a})")
                 continue
@@ -908,6 +977,17 @@ def build_cloudstream(ctx: Ctx):
                 drop("duplicate_internal_name")
                 continue
             url = str(e.get("url", ""))
+            # upstream sometimes ships file names with unencoded spaces
+            # ("CNC Verse.cs3"); percent-encode the path without touching
+            # already-encoded sequences
+            try:
+                _p = urllib.parse.urlsplit(url)
+                url = urllib.parse.urlunsplit(
+                    (_p.scheme, _p.netloc, urllib.parse.quote(_p.path, safe="/%"),
+                     _p.query, _p.fragment)
+                )
+            except ValueError:
+                pass
             ok, reason = C.check_url_allowed(url, ctx.domains, executable=True)
             if not ok:
                 drop(f"plugin_url [{internal}] ({reason})")
@@ -954,25 +1034,38 @@ def build_cloudstream(ctx: Ctx):
             if icon_url:
                 if "%size%" in icon_url:
                     icon_url = icon_url.replace("%size%", "128")
-                ok, reason = C.check_url_allowed(icon_url, ctx.domains, executable=False)
-                ok_safe, reason2 = C.is_safe_fetch_target(icon_url, ctx.domains)
-                if ok or ok_safe:
+                # try the declared icon first, then a Google S2 favicon for the
+                # same site (dead paths / moved favicon endpoints are common)
+                icon_data = None
+                last_icon_err = None
+                candidates = [icon_url]
+                fb = _favicon_fallback(icon_url)
+                if fb and fb != icon_url:
+                    candidates.append(fb)
+                for cand in candidates:
+                    ok, reason = C.check_url_allowed(cand, ctx.domains, executable=False)
+                    ok_safe, reason2 = C.is_safe_fetch_target(cand, ctx.domains)
+                    if not (ok or ok_safe):
+                        last_icon_err = reason or reason2
+                        continue
                     try:
                         # icons: no fixed final-host set — a redirect (if any) is
                         # still validated by the policy callback, and the bytes
                         # are verified to be a real image afterwards
-                        icon_data = ctx.fetch_strict(icon_url, lambda u: C.is_safe_fetch_target(u, ctx.domains))
-                        kind = C.image_kind(icon_data)
-                        if kind:
-                            rel_i = f"cloudstream/icon/{C.slugify(internal)}.{kind}"
-                            ctx.store(rel_i, icon_data)
-                            new_icon = f"{ctx.raw_base}/{rel_i}"
-                        else:
-                            warnings.append(f"{internal}: icon not an image, omitted")
+                        data = ctx.fetch_strict(cand, lambda u: C.is_safe_fetch_target(u, ctx.domains))
+                        if C.image_kind(data):
+                            icon_data = data
+                            break
+                        last_icon_err = "not an image"
                     except (C.FetchError, C.PolicyError) as ex:
-                        warnings.append(f"{internal}: icon fetch failed ({ex}), omitted")
+                        last_icon_err = str(ex)
+                if icon_data:
+                    kind = C.image_kind(icon_data)
+                    rel_i = f"cloudstream/icon/{C.slugify(internal)}.{kind}"
+                    ctx.store(rel_i, icon_data)
+                    new_icon = f"{ctx.raw_base}/{rel_i}"
                 else:
-                    warnings.append(f"{internal}: icon url rejected ({reason or reason2}), omitted")
+                    warnings.append(f"{internal}: icon fetch failed ({last_icon_err}), omitted")
 
             out = {
                 "name": name,
