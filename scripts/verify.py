@@ -119,7 +119,10 @@ def verify_aniyomi(ctx: dict, domains: dict, report: dict):
             err(f"{label}: duplicate apk filename")
         seen_pkg.add(pkg)
         seen_apk.add(apk)
-        if e.get("nsfw") not in (0, False):
+        if ctx.get("allow_nsfw"):
+            if e.get("nsfw") not in (0, 1, 2, False):
+                err(f"{label}: nsfw flag {e.get('nsfw')!r} not in 0/1/2")
+        elif e.get("nsfw") not in (0, False):
             err(f"{label}: nsfw flag set")
         if not isinstance(e.get("sources"), list) or not e["sources"]:
             err(f"{label}: empty sources")
@@ -160,7 +163,7 @@ def verify_mangayomi(ctx: dict, domains: dict, report: dict):
             label = f"mangayomi/{fname}[{i}] {e.get('name', '?')}"
             if e.get("itemType") != itemtype:
                 err(f"{label}: itemType {e.get('itemType')} != {itemtype}")
-            if e.get("isNsfw"):
+            if e.get("isNsfw") and not ctx.get("allow_nsfw"):
                 err(f"{label}: nsfw flagged")
             sid = e.get("id")
             if sid in seen_ids:
@@ -178,7 +181,7 @@ def verify_mangayomi(ctx: dict, domains: dict, report: dict):
             pih = C.public_ip_host(str(e.get("baseUrl", "")))
             if pih:
                 err(f"{label}: public-ip baseUrl {pih}")
-            if C.adult_blocked(str(e.get("name", "")), domains):
+            if C.adult_blocked(str(e.get("name", "")), domains) and not ctx.get("allow_adult_names"):
                 err(f"{label}: adult-name pattern")
 
 
@@ -199,7 +202,7 @@ def verify_sora(ctx: dict, domains: dict, report: dict):
         mtype = str(e.get("type", "")).lower()
         if mtype not in {"anime", "movie", "mangas"}:
             err(f"{label}: type {mtype!r} invisible to Dartotsu")
-        if e.get("nsfw") is True:
+        if e.get("nsfw") is True and not ctx.get("allow_nsfw"):
             err(f"{label}: nsfw flag set")
         if not str(e.get("baseUrl", "")).startswith("https://"):
             err(f"{label}: bad baseUrl")
@@ -265,7 +268,8 @@ def verify_cloudstream(ctx: dict, domains: dict, report: dict):
         if e.get("repositoryUrl"):
             check_reference_url(str(e["repositoryUrl"]), domains, label, executable=False)
         if C.adult_blocked(" ".join(str(x) for x in [e.get("name"), e.get("description"),
-                                                     " ".join(e.get("tvTypes") or [])]), domains):
+                                                     " ".join(e.get("tvTypes") or [])]), domains) \
+                and not ctx.get("allow_adult_names"):
             err(f"{label}: adult-name pattern")
 
 
@@ -318,7 +322,9 @@ def main():
     if not raw_base:
         err("build-report.json missing raw_base")
         raw_base = ""
-    ctx = {"raw_base": raw_base}
+    ctx = {"raw_base": raw_base,
+           "allow_nsfw": bool(policy["upstreams"].get("allow_nsfw", False)),
+           "allow_adult_names": bool(policy["upstreams"].get("allow_adult_names", False))}
 
     # build must have been clean
     crit = report.get("critical") or []

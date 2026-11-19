@@ -52,7 +52,7 @@ index.min.json              Aniyomi-format index (anime + manga entries, split b
 icon/<pkg>.png              Mirrored extension icons
 apk/<name>.apk              Mirrored Aniyomi APKs (the app derives APK URLs from the index location,
                             so binaries MUST be hosted in-repo)
-mangayomi/index.json        Mangayomi manga catalog (passes upstream through, SFW-filtered)
+mangayomi/index.json        Mangayomi manga catalog (passes upstream through)
 mangayomi/anime_index.json  Mangayomi anime catalog
 mangayomi/novel_index.json  Mangayomi novel catalog
 sora/index.json             Aggregated Sora modules (scripts/icons re-hosted in sora/)
@@ -67,10 +67,14 @@ scripts/verify.py           Verifies checksums, schema and URL policy (+ --onlin
 
 ## What gets filtered out
 
-- **NSFW extensions** (`nsfw` flags, `CONTENT_WARNING_NSFW`, adult-name heuristics)
+- **NSFW filtering is currently OFF (18+ enabled)**: `allow_nsfw` and `allow_adult_names` are
+  `true` in `policy/upstreams.json`, so NSFW-flagged extensions, `CONTENT_WARNING_NSFW`/`MIXED`
+  sources and adult-named sources are published (with their `nsfw` badges intact, so Dartotsu
+  can still hide them per your app setting). Set both flags to `false` and rebuild to restore
+  the SFW-only filter — `verify.py` enforces whichever way the policy points.
 - Entries whose URLs leave the **domain/repo allowlist** (`policy/domains.json`)
 - Anything matching the **blocklist** (`policy/blocklist.json`)
-- CloudStream plugins with `status: 0` (down), paid plugins, adult-typed plugins
+- CloudStream plugins with `status: 0` (down) and paid plugins
 - Sora modules Dartotsu cannot display (missing type, novels/audio); `shows`/`movies`
   type variants are normalized to `movie` so they appear in the video section
 - Binaries that fail content checks: malformed zips, missing `classes.dex`, suspicious URLs

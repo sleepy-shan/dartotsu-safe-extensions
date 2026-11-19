@@ -1,12 +1,14 @@
 {
-  "$comment": "Vetted upstream configuration for the curated Dartotsu extension repository. Edit and re-run scripts/build.py to change what gets published.",
+  "$comment": "Vetted upstream configuration for the curated Dartotsu extension repository. Edit and re-run scripts/build.py to change what gets published. allow_nsfw/allow_adult_names are the 18+ switch: when true, NSFW-flagged entries, CONTENT_WARNING_NSFW/MIXED sources and adult-pattern names are published (still fully security-vetted); set them to false to re-enable the SFW-only filter.",
+  "allow_nsfw": true,
+  "allow_adult_names": true,
   "aniyomi": {
     "anime": {
       "enabled": true,
       "format": "legacy",
       "index_url": "https://raw.githubusercontent.com/yuzono/anime-repo/repo/index.min.json",
       "upstream": "yuzono/anime-repo",
-      "mode": "allowlist",
+      "mode": "all",
       "include": [
         "123Anime",
         "Anichi",
@@ -69,9 +71,11 @@
       "format": "mihon_v2",
       "index_url": "https://raw.githubusercontent.com/keiyoushi/extensions/repo/index.json",
       "upstream": "keiyoushi/extensions",
-      "mode": "allowlist",
+      "mode": "all",
       "allowed_content_warnings": [
-        "CONTENT_WARNING_SAFE"
+        "CONTENT_WARNING_SAFE",
+        "CONTENT_WARNING_MIXED",
+        "CONTENT_WARNING_NSFW"
       ],
       "include": [
         "Asura Scans",
@@ -148,7 +152,7 @@
   "mangayomi": {
     "enabled": true,
     "upstream": "m2k3a/mangayomi-extensions",
-    "mode": "all_sfw",
+    "mode": "all",
     "indexes": {
       "manga": "https://raw.githubusercontent.com/m2k3a/mangayomi-extensions/main/index.json",
       "anime": "https://raw.githubusercontent.com/m2k3a/mangayomi-extensions/main/anime_index.json",
@@ -163,7 +167,9 @@
     ],
     "exclude_ids": [
       {"id": 607918644, "reason": "Mangás Online: mangasonline.cc no longer resolves in DNS and no icon service knows the domain (verified 2026-10-07)"},
-      {"id": 592572146, "reason": "Manga-Moon: manga-moons.net serves an invalid TLS certificate and no icon service knows the domain (verified 2026-10-07)"}
+      {"id": 592572146, "reason": "Manga-Moon: manga-moons.net serves an invalid TLS certificate and no icon service knows the domain (verified 2026-10-07)"},
+      {"id": 11129663, "reason": "至臻视觉: mihdr.top does not resolve in DNS at all (verified 2026-11-19); site is dead"},
+      {"id": 960204960, "reason": "ManhwaZ: manhwaz.com domain registration expired - serves a Namecheap renewal page (verified 2026-11-19); site is dead"}
     ]
   },
   "sora": {
@@ -192,7 +198,8 @@
       "mp4upload.com": "video host resolved by streaming modules (reviewed; covers a4.mp4upload.com)",
       "voe.sx": "video host resolved by streaming modules (reviewed)",
       "vidmoly.to": "video host resolved by streaming modules (reviewed)",
-      "speedfiles.net": "video host resolved by streaming modules (reviewed)"
+      "speedfiles.net": "video host resolved by streaming modules (reviewed)",
+      "streamingunity.shop": "StreamingUnity module's own site: baseUrl streamingunity.bio is an alternate domain of the same service; the JS only builds title/poster/iframe URLs on it (reviewed 2026-11-19)"
     }
   },
   "cloudstream": {
